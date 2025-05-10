@@ -54,7 +54,7 @@ public class STaskSimpleExamples {
             var hotTask = new LongRunningTask("hotwire-task", 10, "110$", false);
             
             // Start running the tasks in parallel 
-            StructuredTaskScope.Subtask<TaskResponse> expSubTask = scope.fork(expTask);
+            Subtask<TaskResponse> expSubTask = scope.fork(expTask);
             Subtask<TaskResponse> hotSubTask = scope.fork(hotTask);
 
 			// Code to simulate random exception being thrown
