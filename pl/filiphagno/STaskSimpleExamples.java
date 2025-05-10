@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.StructuredTaskScope;
 import java.util.concurrent.StructuredTaskScope.Subtask;
-import java.util.concurrent.StructuredTaskScope.Subtask.State;
 
 import pl.filiphagno.LongRunningTask.TaskResponse;
 
@@ -55,7 +54,7 @@ public class STaskSimpleExamples {
             var hotTask = new LongRunningTask("hotwire-task", 10, "110$", false);
             
             // Start running the tasks in parallel 
-            Subtask<TaskResponse> expSubTask = scope.fork(expTask);
+            StructuredTaskScope.Subtask<TaskResponse> expSubTask = scope.fork(expTask);
             Subtask<TaskResponse> hotSubTask = scope.fork(hotTask);
 
 			// Code to simulate random exception being thrown
@@ -69,16 +68,16 @@ public class STaskSimpleExamples {
             scope.join();
             
             // Handle Child Task Results (might have succeeded or failed)
-            State expState = expSubTask.state();
-            if (expState == State.SUCCESS) 
+            Subtask.State expState = expSubTask.state();
+            if (expState == Subtask.State.SUCCESS)
                 System.out.println(expSubTask.get());
-            else if (expState == State.FAILED) 
+            else if (expState == Subtask.State.FAILED)
                 System.out.println(expSubTask.exception());
             
-            State hotState = hotSubTask.state();
-            if (hotState == State.SUCCESS) 
+            Subtask.State hotState = hotSubTask.state();
+            if (hotState == Subtask.State.SUCCESS)
                 System.out.println(hotSubTask.get());
-            else if (hotState == State.FAILED)
+            else if (hotState == Subtask.State.FAILED)
                 System.out.println(hotSubTask.exception());
         }
         
