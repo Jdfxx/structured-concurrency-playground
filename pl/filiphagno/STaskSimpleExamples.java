@@ -15,7 +15,9 @@ public class STaskSimpleExamples {
         
         // Simulate interrupt to the Main Thread before Child threads complete
         //interruptMain();
-        exampleShutdownOnFailure();
+        //exampleShutdownOnFailure();
+        //exampleCompleteAllTasks();
+        exampleShutdownOnSuccess();
         
         System.out.println("Main : Completed");
 
@@ -26,7 +28,7 @@ public class STaskSimpleExamples {
         
         try(var scope = new StructuredTaskScope.ShutdownOnFailure()) {
             
-            var dataTask = new LongRunningTask("dataTask", 3,  "row1", false);
+            var dataTask = new LongRunningTask("dataTask", 3,  "row1", true);
             var restTask = new LongRunningTask("restTask", 10, "json2", false);
             
             // Start running the tasks in parallel 
@@ -80,7 +82,7 @@ public class STaskSimpleExamples {
             else if (hotState == Subtask.State.FAILED)
                 System.out.println(hotSubTask.exception());
         }
-        
+
     }
     
     
@@ -89,7 +91,7 @@ public class STaskSimpleExamples {
         
         try(var scope = new StructuredTaskScope.ShutdownOnSuccess<TaskResponse>()) {
             
-            var wthr1Task = new LongRunningTask("Weather-1", 3,  "32", true);
+            var wthr1Task = new LongRunningTask("Weather-1", 3,  "32", false);
             var wthr2Task = new LongRunningTask("Weather-2", 10, "30", true);
             
             // Start running the tasks in parallel 

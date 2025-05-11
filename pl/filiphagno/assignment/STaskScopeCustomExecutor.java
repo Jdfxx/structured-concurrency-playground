@@ -25,7 +25,7 @@ public class STaskScopeCustomExecutor {
         var w1Task = new LongRunningTask("Weather-1", 3, "30", true);
         var w2Task = new LongRunningTask("Weather-2", 4, "32", false);
         var w3Task = new LongRunningTask("Weather-3", 5, "34", false);
-        var w4Task = new LongRunningTask("Weather-4", 6, "34", true);
+        var w4Task = new LongRunningTask("Weather-4", 6, "34", false);
         var w5Task = new LongRunningTask("Weather-5", 9, "30", true);
         
         TaskResponse result 
@@ -87,8 +87,6 @@ class AverageWeatherTaskScope extends StructuredTaskScope<TaskResponse> {
         if (numOfResponses == 2) {
             this.shutdown();
         }
-        
-        return;
     }
 
     @Override
